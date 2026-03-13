@@ -23,8 +23,8 @@ export default function Dashboard() {
   const fetchApplications = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`${API_URL}/api/applications`)
-      setApplications(response.data)
+        const response = await axios.get(`${API_URL}/api/applications`)
+        setApplications(Array.isArray(response.data) ? response.data : [])
     } catch (error) {
       toast.error('Failed to load applications')
     } finally {
