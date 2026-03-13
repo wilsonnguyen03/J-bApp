@@ -22,16 +22,16 @@
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React + Vite |
-| Styling | Tailwind CSS |
-| Backend | Python + FastAPI |
-| Scraping | Playwright |
-| AI Extraction | Claude API (`claude-sonnet-4-20250514`) |
-| Database | Supabase (PostgreSQL) |
-| Frontend Hosting | Vercel |
-| Backend Hosting | Render |
+| Layer            | Technology                              |
+| ---------------- | --------------------------------------- |
+| Frontend         | React + Vite                            |
+| Styling          | Tailwind CSS                            |
+| Backend          | Python + FastAPI                        |
+| Scraping         | Playwright                              |
+| AI Extraction    | Claude API (`claude-sonnet-4-20250514`) |
+| Database         | Supabase (PostgreSQL)                   |
+| Frontend Hosting | Vercel                                  |
+| Backend Hosting  | Render                                  |
 
 ---
 
@@ -101,13 +101,13 @@ git --version     # Should print git version 2.x.x
 
 Create free accounts on the following platforms before setting up the project:
 
-| Service | Purpose | Link |
-|---------|---------|------|
-| **Supabase** | Hosted PostgreSQL database | [supabase.com](https://supabase.com) |
+| Service       | Purpose                           | Link                                                   |
+| ------------- | --------------------------------- | ------------------------------------------------------ |
+| **Supabase**  | Hosted PostgreSQL database        | [supabase.com](https://supabase.com)                   |
 | **Anthropic** | Claude AI API for data extraction | [console.anthropic.com](https://console.anthropic.com) |
-| **GitHub** | Version control | [github.com](https://github.com) |
-| **Vercel** | Frontend hosting | [vercel.com](https://vercel.com) |
-| **Render** | Backend hosting | [render.com](https://render.com) |
+| **GitHub**    | Version control                   | [github.com](https://github.com)                       |
+| **Vercel**    | Frontend hosting                  | [vercel.com](https://vercel.com)                       |
+| **Render**    | Backend hosting                   | [render.com](https://render.com)                       |
 
 ### Getting your API keys
 
@@ -115,6 +115,7 @@ Create free accounts on the following platforms before setting up the project:
 `Project Settings → API`
 
 You need three values:
+
 - `Project URL` — looks like `https://xyzabc.supabase.co`
 - `anon / public key` — used in the frontend
 - `service_role key` — used in the backend only, never expose this in frontend code
@@ -191,6 +192,7 @@ CREATE TABLE applications (
   deadline     DATE,
   description  TEXT,         -- AI-generated 3-sentence summary
   requirements TEXT[],       -- Array of top requirements/skills
+  rating       NUMERIC(3,1), -- Rate how well your candidacy is based on resume
 
   -- Updated manually by you
   status       TEXT DEFAULT 'Applied',
@@ -244,17 +246,18 @@ The app opens at `http://localhost:5173`.
 
 ## 📡 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/scrape` | Accepts a URL, scrapes it, returns extracted job data as JSON |
-| `POST` | `/api/applications` | Saves a new application to the database |
-| `GET` | `/api/applications` | Returns all applications sorted by date |
-| `PATCH` | `/api/applications/{id}` | Updates a single application (status, notes, etc.) |
-| `DELETE` | `/api/applications/{id}` | Deletes an application |
+| Method   | Endpoint                 | Description                                                   |
+| -------- | ------------------------ | ------------------------------------------------------------- |
+| `POST`   | `/api/scrape`            | Accepts a URL, scrapes it, returns extracted job data as JSON |
+| `POST`   | `/api/applications`      | Saves a new application to the database                       |
+| `GET`    | `/api/applications`      | Returns all applications sorted by date                       |
+| `PATCH`  | `/api/applications/{id}` | Updates a single application (status, notes, etc.)            |
+| `DELETE` | `/api/applications/{id}` | Deletes an application                                        |
 
 ### Example: scrape a job listing
 
 **Request**
+
 ```bash
 curl -X POST http://localhost:8000/api/scrape \
   -H "Content-Type: application/json" \
@@ -262,6 +265,7 @@ curl -X POST http://localhost:8000/api/scrape \
 ```
 
 **Response**
+
 ```json
 {
   "company": "Acme Corp",
@@ -285,15 +289,15 @@ curl -X POST http://localhost:8000/api/scrape \
 
 ## 🏷️ Application Statuses
 
-| Status | Meaning |
-|--------|---------|
-| `Applied` | Submitted, waiting to hear back |
+| Status         | Meaning                             |
+| -------------- | ----------------------------------- |
+| `Applied`      | Submitted, waiting to hear back     |
 | `Phone Screen` | Initial call scheduled or completed |
-| `Interview` | In active interview rounds |
-| `Offer` | Received an offer |
-| `Rejected` | Application was unsuccessful |
-| `Withdrawn` | You withdrew your application |
-| `Ghosted` | No response after 2+ weeks |
+| `Interview`    | In active interview rounds          |
+| `Offer`        | Received an offer                   |
+| `Rejected`     | Application was unsuccessful        |
+| `Withdrawn`    | You withdrew your application       |
+| `Ghosted`      | No response after 2+ weeks          |
 
 ---
 
@@ -307,20 +311,20 @@ curl -X POST http://localhost:8000/api/scrape \
 
 3. Configure the service:
 
-    ```
-    Root Directory:   backend
-    Build Command:    pip install -r requirements.txt && playwright install chromium
-    Start Command:    uvicorn main:app --host 0.0.0.0 --port $PORT
-    ```
+   ```
+   Root Directory:   backend
+   Build Command:    pip install -r requirements.txt && playwright install chromium
+   Start Command:    uvicorn main:app --host 0.0.0.0 --port $PORT
+   ```
 
 4. Add environment variables under the **Environment** tab:
 
-    ```
-    ANTHROPIC_API_KEY     →  your Anthropic key
-    SUPABASE_URL          →  your Supabase project URL
-    SUPABASE_SERVICE_KEY  →  your Supabase service role key
-    FRONTEND_URL          →  your Vercel URL (add after deploying frontend)
-    ```
+   ```
+   ANTHROPIC_API_KEY     →  your Anthropic key
+   SUPABASE_URL          →  your Supabase project URL
+   SUPABASE_SERVICE_KEY  →  your Supabase service role key
+   FRONTEND_URL          →  your Vercel URL (add after deploying frontend)
+   ```
 
 5. Deploy and note your live URL — e.g. `https://job-tracker-api.onrender.com`
 
@@ -334,16 +338,16 @@ curl -X POST http://localhost:8000/api/scrape \
 
 2. Configure:
 
-    ```
-    Root Directory:    frontend
-    Framework Preset:  Vite
-    ```
+   ```
+   Root Directory:    frontend
+   Framework Preset:  Vite
+   ```
 
 3. Add environment variable:
 
-    ```
-    VITE_API_URL  →  https://job-tracker-api.onrender.com
-    ```
+   ```
+   VITE_API_URL  →  https://job-tracker-api.onrender.com
+   ```
 
 4. Deploy — Vercel provides a live URL immediately (e.g. `https://job-tracker.vercel.app`)
 
