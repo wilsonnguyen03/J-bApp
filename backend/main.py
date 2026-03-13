@@ -1,3 +1,9 @@
+import sys
+import asyncio
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,6 +36,9 @@ async def scrape(request: ScrapeRequest):
         job_data["url"] = request.url
         return job_data
     except Exception as e:
+        print(f"SCRAPE ERROR: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=400, detail=str(e))
 
 # ── Save a new application ───────────────────────────────────────────────────
