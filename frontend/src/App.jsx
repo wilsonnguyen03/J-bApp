@@ -1,9 +1,9 @@
+import Dashboard from './pages/Dashboard'
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-white">
-        Job Tracker is alive 🎉
-      </h1>
+    <div className="min-h-screen bg-gray-950 text-gray-100">
+      <Dashboard />
     </div>
   )
 }
